@@ -1,6 +1,6 @@
 package it.polito.tdp.nqueens.model.board;
 
-public class Position{
+public class Position implements Comparable<Position>{
 	public int x;
 	public int y;
 	
@@ -13,8 +13,6 @@ public class Position{
 		this.x = xy[0];
 		this.y = xy[1];
 	}
-	
-	
 	
 	@Override
 	public int hashCode() {
@@ -49,6 +47,22 @@ public class Position{
 	public String toString() {
 		return "[" + x + ", " + y + "]";
 	}
+	
+	public static Position deepClone(Position p) {
+		return new Position(p.x, p.y);
+	}
+
+	@Override
+	public int compareTo(Position arg0) {
+		int dX = this.x - arg0.x;
+		if (dX == 0) {
+			return this.y - arg0.y;
+		} else {
+			return dX;
+		}
+	}
+	
+	
 	
 	
 }

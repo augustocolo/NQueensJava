@@ -29,6 +29,12 @@ public class TestBoard {
 		System.out.println(bb.getPieces());
 		System.out.println(bb.existsConflict());
 		
+		Board bb2 = Board.deepClone(bb);
+		
+		Position pos4 = new Position(4, 1);
+		Queen qq4 = new Queen();
+		bb2.addPiece(pos4, qq4);
+		System.out.println(bb2.getPieces());
 	}
 
 }
