@@ -2,12 +2,17 @@ package it.polito.tdp.nqueens.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import it.polito.tdp.nqueens.model.board.Board;
 import it.polito.tdp.nqueens.model.board.Position;
+import it.polito.tdp.nqueens.model.pieces.Bishop;
+import it.polito.tdp.nqueens.model.pieces.King;
+import it.polito.tdp.nqueens.model.pieces.Knight;
+import it.polito.tdp.nqueens.model.pieces.Pawn;
 import it.polito.tdp.nqueens.model.pieces.Piece;
+import it.polito.tdp.nqueens.model.pieces.Queen;
+import it.polito.tdp.nqueens.model.pieces.Rook;
 
 public class Model {
 
@@ -15,8 +20,33 @@ public class Model {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public List<Board> solveProblem(int boardSize, List<Piece> pieces) {
-		Board b = new Board(boardSize);
+	public List<Board> solveProblem(ModelInfoTransport modelInfo) {
+		List<Piece> pieces = new ArrayList<Piece>();
+		// generate queens
+		for (int i = 0; i<modelInfo.getNumQueens(); i++) {
+			pieces.add(new Queen());
+		}
+		// generate rooks
+		for (int i = 0; i<modelInfo.getNumRooks(); i++) {
+			pieces.add(new Rook());
+		}
+		// generate bishops
+		for (int i = 0; i<modelInfo.getNumBishops(); i++) {
+			pieces.add(new Bishop());
+		}
+		// generate knights
+				for (int i = 0; i<modelInfo.getNumKnights(); i++) {
+					pieces.add(new Knight());
+				}
+		// generate kings
+		for (int i = 0; i<modelInfo.getNumKings(); i++) {
+			pieces.add(new King());
+		}
+		// generate pawns
+		for (int i = 0; i<modelInfo.getNumPawns(); i++) {
+			pieces.add(new Pawn());
+		}
+		Board b = new Board(modelInfo.getBoardSize());
 		List<Board> resOne = this.recursive(b, pieces);
 		return Board.cleanList(resOne);
 	}
