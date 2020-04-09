@@ -1,10 +1,8 @@
 package it.polito.tdp.nqueens.model.pieces;
 
-import java.util.function.Function;
+public class Bishop extends VariableMovementPiece {
 
-public class Queen extends VariableMovementPiece {
-
-	public Queen() {
+	public Bishop() {
 		super();
 		this.moves.add((Integer boardSize) -> {
 			Integer[] aa = { boardSize, boardSize };
@@ -22,29 +20,11 @@ public class Queen extends VariableMovementPiece {
 			Integer[] aa = { -boardSize, -boardSize };
 			return aa;
 		});
-		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { boardSize, 0 };
-			return aa;
-		});
-		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { -boardSize, 0 };
-			return aa;
-		});
-		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { 0, boardSize };
-			return aa;
-		});
-		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { 0, -boardSize };
-			return aa;
-		});
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Queen";
+		return "Bishop";
 	}
-	
-	
 
 }

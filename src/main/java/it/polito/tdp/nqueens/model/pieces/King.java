@@ -1,50 +1,49 @@
 package it.polito.tdp.nqueens.model.pieces;
 
-import java.util.function.Function;
+public class King extends FixedMovementPiece {
 
-public class Queen extends VariableMovementPiece {
-
-	public Queen() {
+	public King() {
 		super();
 		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { boardSize, boardSize };
+			Integer[] aa = { 1, 1 };
 			return aa;
 		});
 		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { boardSize, -boardSize };
+			Integer[] aa = { 1, -1 };
 			return aa;
 		});
 		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { -boardSize, boardSize };
+			Integer[] aa = { -1, 1 };
 			return aa;
 		});
 		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { -boardSize, -boardSize };
+			Integer[] aa = { -1, -1 };
 			return aa;
 		});
 		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { boardSize, 0 };
+			Integer[] aa = { 1, 0 };
 			return aa;
 		});
 		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { -boardSize, 0 };
+			Integer[] aa = { 0, 1 };
 			return aa;
 		});
 		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { 0, boardSize };
+			Integer[] aa = { -1, 0 };
 			return aa;
 		});
 		this.moves.add((Integer boardSize) -> {
-			Integer[] aa = { 0, -boardSize };
+			Integer[] aa = { 0, -1 };
 			return aa;
 		});
-	}
-
-	@Override
-	public String toString() {
-		return "Queen";
 	}
 	
+	
+	@Override
+	public String toString() {
+		return "King";
+	}
+
 	
 
 }

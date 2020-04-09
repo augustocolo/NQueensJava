@@ -1,5 +1,6 @@
 package it.polito.tdp.nqueens.model.board;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,7 +93,19 @@ public class Board {
 	}
 	
 	public static List<Board> cleanList(List<Board> boards){
-		return boards.stream().distinct().collect(Collectors.toList());
+		List<Board> out = new ArrayList<Board>();
+		for (Board b: boards) {
+			boolean contains = false;
+			for (Board o: out) {
+				if (o.toString().contentEquals(b.toString())) {
+					contains = true;
+				}
+			}
+			if (!contains) {
+				out.add(b);
+			}
+		}
+		return out;
 	}
 
 	@Override
