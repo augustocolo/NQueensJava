@@ -21,7 +21,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -32,9 +31,7 @@ public class FXMLController {
 	List<Board> doneBoards;
 
 	int currentBoard = 1;
-
-	int currentGridSize = 8;
-
+	
 	@FXML
 	private ResourceBundle resources;
 
@@ -79,35 +76,72 @@ public class FXMLController {
 
 	@FXML
 	private VBox vBoxChess;
+	
+	@FXML
+	private Button btnNext;
+	
+	@FXML
+	private Button btnPrev;
 
 	@FXML
 	void doCalculate(ActionEvent event) {
-		this.clearGrid();
-
-
+		
 		this.doneBoards = model.solveProblem(new ModelInfoTransport((int) sliderBoard.getValue(),
 				spinnerKing.getValue(), spinnerQueen.getValue(), spinnerRook.getValue(), spinnerBishop.getValue(),
 				spinnerKnight.getValue(), spinnerPawn.getValue()));
 		
-		this.currentBoard = 1;
-		this.showBoard(this.doneBoards.get(currentBoard - 1));
-
+		lblNum1.setText("0");
+		lblNum2.setText("0");
+		btnPrev.setDisable(true);
+		btnNext.setDisable(true);
+		
+		if (this.doneBoards.size() != 0) {
+			this.currentBoard = 1;
+			
+			this.showBoard(this.doneBoards.get(currentBoard - 1));
+			
+			
+			if(this.doneBoards.size() > 1) {
+				btnNext.setDisable(false);
+			}
+		} else {
+			this.clearGrid();
+			vBoxChess.getChildren().add(new Label("NO SOLUTION FOUND"));
+		}
+		
+		
 
 	}
 
 	@FXML
 	void doNext(ActionEvent event) {
+		this.currentBoard++;
+		this.showBoard(this.doneBoards.get(currentBoard - 1));
 		
-
+		if (this.currentBoard == this.doneBoards.size()) {
+			btnNext.setDisable(true);
+		}
+		
+		btnPrev.setDisable(false);
 	}
 
 	@FXML
 	void doPrevious(ActionEvent event) {
-
+		this.currentBoard--;
+		this.showBoard(this.doneBoards.get(currentBoard - 1));
+		
+		if (this.currentBoard == 1) {
+			btnPrev.setDisable(true);
+		}
+		
+		btnNext.setDisable(false);
 	}
 	
 	@FXML
 	void showBoard(Board b) {
+		lblNum1.setText(String.valueOf(this.currentBoard));
+		lblNum2.setText(String.valueOf(this.doneBoards.size()));
+		this.clearGrid();
 		for (int i = b.getBoardSize(); i > 0; i--) {
 			HBox hb = new HBox();
 			for (int j = 0; j < b.getBoardSize(); j++) {
@@ -154,6 +188,9 @@ public class FXMLController {
 		assert lblNum1 != null : "fx:id=\"lblNum\" was not injected: check your FXML file 'Scene.fxml'.";
 		assert lblNum2 != null : "fx:id=\"lblNum\" was not injected: check your FXML file 'Scene.fxml'.";
 		assert vBoxChess != null : "fx:id=\"vBoxChess\" was not injected: check your FXML file 'Scene.fxml'.";
+		assert btnNext != null : "fx:id=\"btnCalculate\" was not injected: check your FXML file 'Scene.fxml'.";
+		assert btnPrev != null : "fx:id=\"btnCalculate\" was not injected: check your FXML file 'Scene.fxml'.";
+
 
 		// Configure spinners
 		SpinnerValueFactory<Integer> kingVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Config.NUM_PIECES,
@@ -199,6 +236,11 @@ public class FXMLController {
 		spinnerBishop.valueProperty().addListener(cl2);
 		spinnerKnight.valueProperty().addListener(cl2);
 		spinnerPawn.valueProperty().addListener(cl2);
+		
+		
+		//Disable buttons
+		btnNext.setDisable(true);
+		btnPrev.setDisable(true);
 
 	}
 
