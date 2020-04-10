@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 public abstract class Piece {
 	protected List<Function<Integer, Integer[]>> moves;
+	protected String pathToImage;
 	
 	public Piece() {
 		this.moves = new ArrayList<Function<Integer, Integer[]>>();
@@ -15,5 +16,9 @@ public abstract class Piece {
 	public List<Integer[]> getPossibleMoves(int boardSize){
 		List<Integer[]> out = new ArrayList<Integer[]>();
 		return out;
+	}
+
+	public String getPathToImage() {
+		return pathToImage;
 	}
 }

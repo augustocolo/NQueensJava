@@ -36,6 +36,9 @@ public class King extends FixedMovementPiece {
 			Integer[] aa = { 0, -1 };
 			return aa;
 		});
+		
+		this.pathToImage = "112072-chess/png/king.png";
+
 	}
 	
 	

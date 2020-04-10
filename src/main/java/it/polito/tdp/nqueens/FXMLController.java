@@ -1,5 +1,6 @@
 package it.polito.tdp.nqueens;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -7,6 +8,8 @@ import java.util.ResourceBundle;
 import it.polito.tdp.nqueens.model.Model;
 import it.polito.tdp.nqueens.model.ModelInfoTransport;
 import it.polito.tdp.nqueens.model.board.Board;
+import it.polito.tdp.nqueens.model.board.Position;
+import it.polito.tdp.nqueens.model.pieces.Piece;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -16,16 +19,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class FXMLController {
 
 	Model model;
-	
+
 	List<Board> doneBoards;
-	
+
 	int currentBoard = 1;
-	
+
 	int currentGridSize = 8;
 
 	@FXML
@@ -71,19 +78,26 @@ public class FXMLController {
 	private Label lblNum2;
 
 	@FXML
-	private GridPane gridBoard;
+	private VBox vBoxChess;
 
 	@FXML
 	void doCalculate(ActionEvent event) {
-		/*this.doneBoards = model.solveProblem(new ModelInfoTransport((int) sliderBoard.getValue(),
-				spinnerKing.getValue(), spinnerQueen.getValue(), spinnerRook.getValue(), spinnerBishop.getValue(),
-				spinnerKnight.getValue(), spinnerPawn.getValue()));*/
 		this.clearGrid();
+
+
+		this.doneBoards = model.solveProblem(new ModelInfoTransport((int) sliderBoard.getValue(),
+				spinnerKing.getValue(), spinnerQueen.getValue(), spinnerRook.getValue(), spinnerBishop.getValue(),
+				spinnerKnight.getValue(), spinnerPawn.getValue()));
 		
+		this.currentBoard = 1;
+		this.showBoard(this.doneBoards.get(currentBoard - 1));
+
+
 	}
 
 	@FXML
 	void doNext(ActionEvent event) {
+		
 
 	}
 
@@ -92,15 +106,37 @@ public class FXMLController {
 
 	}
 	
+	@FXML
 	void showBoard(Board b) {
-		
-	}
-	
-	void clearGrid() {
-		while (this.currentGridSize != 0) {
-			currentGridSize--;
-			gridBoard.getChildren().removeIf(node -> GridPane.getRowIndex(node) == this.currentGridSize);
+		for (int i = b.getBoardSize(); i > 0; i--) {
+			HBox hb = new HBox();
+			for (int j = 0; j < b.getBoardSize(); j++) {
+				Position pos = new Position(i-1, j);
+				Piece p = b.getPiece(pos);
+				Image image;
+				if (p != null) {
+					File f = new File(Config.IMAGE_DIR + p.getPathToImage());
+					image = new Image(f.toURI().toString());
+				} else {
+					File f = new File(Config.IMAGE_DIR + "empty.png");
+					image = new Image(f.toURI().toString());
+				}
+				ImageView iv = new ImageView();
+				iv.setImage(image);
+				iv.setFitWidth(Config.CHESSBOARD_WIDTH/b.getBoardSize());
+				iv.setPreserveRatio(true);
+				iv.setSmooth(true);
+				iv.setCache(true);
+				hb.getChildren().add(iv);
+			}
+			vBoxChess.getChildren().add(hb);
 		}
+	}
+
+	void clearGrid() {
+
+		vBoxChess.getChildren().clear();
+
 	}
 
 	@FXML
@@ -117,7 +153,7 @@ public class FXMLController {
 		assert btnCalculate != null : "fx:id=\"btnCalculate\" was not injected: check your FXML file 'Scene.fxml'.";
 		assert lblNum1 != null : "fx:id=\"lblNum\" was not injected: check your FXML file 'Scene.fxml'.";
 		assert lblNum2 != null : "fx:id=\"lblNum\" was not injected: check your FXML file 'Scene.fxml'.";
-		assert gridBoard != null : "fx:id=\"gridBoard\" was not injected: check your FXML file 'Scene.fxml'.";
+		assert vBoxChess != null : "fx:id=\"vBoxChess\" was not injected: check your FXML file 'Scene.fxml'.";
 
 		// Configure spinners
 		SpinnerValueFactory<Integer> kingVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Config.NUM_PIECES,

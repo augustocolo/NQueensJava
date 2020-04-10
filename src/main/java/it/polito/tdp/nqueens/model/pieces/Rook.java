@@ -20,6 +20,9 @@ public class Rook extends VariableMovementPiece {
 			Integer[] aa = { 0, -boardSize };
 			return aa;
 		});
+		
+		this.pathToImage = "112072-chess/png/rook.png";
+
 	}
 	
 	@Override

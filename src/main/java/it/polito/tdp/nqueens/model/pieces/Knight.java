@@ -36,6 +36,9 @@ public class Knight extends FixedMovementPiece {
 			Integer[] aa = { -1, -2 };
 			return aa;
 		});
+		
+		this.pathToImage = "112072-chess/png/knight.png";
+
 	}
 	
 	@Override

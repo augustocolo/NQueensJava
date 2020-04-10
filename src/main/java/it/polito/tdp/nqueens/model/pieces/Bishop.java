@@ -20,11 +20,15 @@ public class Bishop extends VariableMovementPiece {
 			Integer[] aa = { -boardSize, -boardSize };
 			return aa;
 		});
+		
+		this.pathToImage = "112072-chess/png/bishop.png";
 	}
 	
 	@Override
 	public String toString() {
 		return "Bishop";
 	}
+	
+	
 
 }

@@ -38,6 +38,9 @@ public class Queen extends VariableMovementPiece {
 			Integer[] aa = { 0, -boardSize };
 			return aa;
 		});
+		
+		this.pathToImage = "112072-chess/png/queen.png";
+
 	}
 
 	@Override

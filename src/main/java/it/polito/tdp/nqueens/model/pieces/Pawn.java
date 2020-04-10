@@ -12,6 +12,9 @@ public class Pawn extends FixedMovementPiece {
 			Integer[] aa = { -1, 1 };
 			return aa;
 		});
+		
+		this.pathToImage = "112072-chess/png/pawn.png";
+
 	}
 	
 	@Override
